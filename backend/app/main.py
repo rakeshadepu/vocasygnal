@@ -1,11 +1,13 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1.endpoints.router import api_router
+from app.core.config import settings
+
 app = FastAPI(
-    title="VocaSygnal API",
-    description="Job Market Intelligence and Career Matching Platform",
-    version="0.1.0",
+    title=settings.app_name,
+    description=("Job market intelligence and career matching platform."),
+    version=settings.app_version,
 )
 
 app.add_middleware(
@@ -18,16 +20,11 @@ app.add_middleware(
 
 
 @app.get("/")
-async def root() -> dict[str, str]:
+def root() -> dict[str, str]:
     return {
         "message": "Welcome to VocaSygnal API",
-        "version": "0.1.0",
+        "version": settings.app_version,
     }
 
 
-@app.get("/api/v1/health")
-async def health_check() -> dict[str, str]:
-    return {
-        "status": "healthy",
-        "service": "vocasygnal-api",
-    }
+app.include_router(api_router, prefix="/api/v1")
