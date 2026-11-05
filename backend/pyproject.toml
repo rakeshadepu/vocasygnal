@@ -5,11 +5,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vocasygnal-backend"
-version = "0.1.0"
+version = "0.2.0"
 description = "Job market intelligence and career matching API"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]",
+    "sqlalchemy>=2.0",
+    "psycopg[binary]",
+    "alembic",
+    "pydantic-settings",
 ]
 
 [project.optional-dependencies]
